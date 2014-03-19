@@ -25,19 +25,11 @@ describe('ng-table', function () {
         elm = angular.element(
             '<div>' +
                 '<script type="text/ng-template" id="ng-table/filters/money.html"></script>' +
-                '<table ng-table="tableParams" show-filter="true">' +
-                '<tr ng-repeat="user in $data">' +
-                '<td data-title="\'Name of person\'" filter="{ \'name\': \'text\' }" sortable="name">' +
-                '{{user.name}}' +
-                '</td>' +
-                '<td x-data-title="\'Age\'" sortable="age">' +
-                '{{user.age}}' +
-                '</td>' +
-                '<td title="\'Money\'" filter="{ \'action\': \'money\' }" filter-data="money($column)">' +
-                '{{user.money}}' +
-                '</td>' +
-                '</tr>' +
-                '</table>' +
+                '<div ng-table="tableParams">' +
+                '<div ng-repeat="user in $data">' +
+                '<p>{{user.name}}</p>' +
+                '</div>' +
+                '</div>' +
                 '</div>');
 
         scope = $rootScope.$new(true);
@@ -56,31 +48,7 @@ describe('ng-table', function () {
         scope.$digest();
     }));
 
-    it('should create table header', inject(function ($compile, $rootScope) {
-        var thead = elm.find('thead');
-        expect(thead.length).toBe(1);
-
-        var rows = thead.find('tr');
-        expect(rows.length).toBe(2);
-
-        var titles = angular.element(rows[0]).find('th');
-
-        expect(titles.length).toBe(3);
-        expect(angular.element(titles[0]).text().trim()).toBe('Name of person');
-        expect(angular.element(titles[1]).text().trim()).toBe('Age');
-        expect(angular.element(titles[2]).text().trim()).toBe('Money');
-
-        var filters = angular.element(rows[1]).find('th');
-        expect(filters.length).toBe(3);
-    }));
-
     it('should show scope data', inject(function ($compile, $rootScope, ngTableParams) {
-        debugger;
-        var tbody = elm.find('tbody');
-        expect(tbody.length).toBe(1);
-
-        var rows = tbody.find('tr');
-        expect(rows.length).toBe(0);
 
         var params = new ngTableParams({
             page: 1,            // show first page
